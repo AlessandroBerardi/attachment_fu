@@ -237,7 +237,7 @@ module Technoweenie # :nodoc:
 
       # Copies the given file path to a new tempfile, returning the closed tempfile.
       def copy_to_temp_file(file, temp_base_name)
-        returning Tempfile.new(temp_base_name, Technoweenie::AttachmentFu.tempfile_path) do |tmp|
+        returning Tempfile.new([File.basename(temp_base_name.to_s, ext = File.extname(temp_base_name.to_s)), ext], Technoweenie::AttachmentFu.tempfile_path) do |tmp|
           tmp.close
           FileUtils.cp file, tmp.path
         end
@@ -245,7 +245,7 @@ module Technoweenie # :nodoc:
 
       # Writes the given data to a new tempfile, returning the closed tempfile.
       def write_to_temp_file(data, temp_base_name)
-        returning Tempfile.new(temp_base_name, Technoweenie::AttachmentFu.tempfile_path) do |tmp|
+        returning Tempfile.new([File.basename(temp_base_name.to_s, ext = File.extname(temp_base_name.to_s)), ext], Technoweenie::AttachmentFu.tempfile_path) do |tmp|
           tmp.binmode
           tmp.write data
           tmp.close
